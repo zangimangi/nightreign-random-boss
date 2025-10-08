@@ -1,0 +1,255 @@
+/* common.css 共通設定 */
+body {
+    font-family: "Yu Gothic UI", "Noto Sans JP", sans-serif;
+    margin: 0;
+    padding-top: 220px; /* ヘッダー分 */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #404040;
+    color: #c9c9c9;
+    text-align: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 40px 10px 20px 20px;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+                url("../image/header.jpg");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    z-index: 1000;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.6em;
+    color: #d4cfa5;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(80,70,50,0.6);
+    border-bottom: 1px solid #555;
+    padding-bottom: 6px;
+    margin: 0 auto 10px;
+    display: inline-block;
+    font-family: "Cinzel", "Times New Roman", serif;
+}
+
+header a {
+    color: #d4cfa5;
+    font-size: 0.9em;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 10px rgba(80,70,50,0.6);
+    border-bottom: 1px solid #555;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin: 0 20px;
+    font-family: "Cinzel", "Times New Roman", serif;
+}
+
+h2 {
+    font-size: 2em;
+    font-weight: 700;
+    color: #d4cfa5;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 6px rgba(0,0,0,0.8),0 0 10px rgba(80,70,50,0.6);
+    border-bottom: 1px solid #555;
+    display: inline-block;
+    padding-bottom: 6px;
+    margin: 0 auto 20px;
+    font-family: "Cinzel", "Times New Roman", serif;
+}
+
+section {
+    scroll-margin-top: 220px;
+    margin-bottom: 60px;
+}
+
+/* 夜の王別背景色 */
+.tricephalos { background-color: #7b2e27; color: #fff; }
+.gaping-jaw { background-color: #2a1f4b; color: #fff; }
+.augur { background-color: #141a4a; color: #fff; }
+.equilibrious-beast { background-color: #58441a; color: #fff; }
+.darkdrift-knight { background-color: #9f9850; color: #222; }
+.fissure-in-the-fog { background-color: #5f9ea0; color: #222; }
+.sentient-pest { background-color: #2b3b28; color: #fff; }
+.night-aspect { background-color: #0a0a0a; color: #fff; }
+
+
+/* search.css 検索ブロック */
+.inputs {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.day1, .day2, .day3 {
+    background-color: #1b1b1b;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    color: #ddd;
+}
+
+.day1 h3, .day2 h3, .day3 h3 {
+    text-align: center;
+    font-size: 1.2em;
+    color: #d4cfa5;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 6px;
+    font-family: "Cinzel", "Times New Roman", serif;
+    letter-spacing: 2px;
+}
+
+#day1-buttons, #day2-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#day1-buttons button, #day2-buttons button {
+    padding: 8px 12px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #ddd;
+    cursor: pointer;
+    text-align: left;
+}
+
+#day1-buttons button.selected, #day2-buttons button.selected {
+    background-color: #b5a32a !important;
+    color: #1b1b1b;
+    box-shadow: inset 0 0 6px rgba(255,255,255,0.2);
+}
+
+#day2-buttons button:disabled {
+    background-color: #444;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #666;
+}
+
+#result {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+#result div {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #fff;
+    border: 1px solid #555;
+}
+
+#reset-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: #b5a32a;
+    color: #1b1b1b;
+    border: 2px solid #8a7f1a;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#reset-btn:hover {
+    background-color: #d4cfa5;
+}
+
+/* 早見表 全体 */
+.lists {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap; /* 画面幅が狭ければ折り返して縦並び */
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+/* 一日目・二日目ボス表 */
+.day1-bosses, .day2-bosses {
+    background-color: #1b1b1b;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 15px; /* 少し小さく */
+    width: 45%;    /* 横並び可能なら横並び */
+    min-width: 250px; /* 最小幅確保 */
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    color: #ddd;
+    transition: all 0.2s ease;
+}
+
+/* セクションタイトル */
+.day1-bosses h3, .day2-bosses h3 {
+    font-family: "Cinzel", "Times New Roman", serif;
+    color: #d4cfa5;
+    text-align: center;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #777;
+    padding-bottom: 6px;
+    letter-spacing: 2px;
+}
+
+/* テーブル */
+.day1-bosses table, .day2-bosses table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em; /* 少し小さく */
+    color: #ddd;
+}
+
+.day1-bosses th, .day2-bosses th {
+    background-color: #2c2c2c;
+    color: #d4cfa5;
+    padding: 8px;
+    border: 1px solid #555;
+}
+
+.day1-bosses td, .day2-bosses td {
+    padding: 8px;
+    border: 1px solid #555;
+}
+
+.day1-bosses tr:hover, .day2-bosses tr:hover {
+    background-color: rgba(181, 163, 42, 0.15);
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 1024px) {
+    .day1-bosses, .day2-bosses {
+        width: 48%; /* 横並び維持 */
+        min-width: 220px;
+        padding: 12px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 768px) {
+    .lists { flex-direction: column; gap: 15px; } /* 縦並びに切替 */
+    .day1-bosses, .day2-bosses { width: 95%; min-width: auto; margin-bottom: 15px; }
+}
+
+@media (max-width: 480px) {
+    .day1-bosses, .day2-bosses { width: 100%; padding: 10px; font-size: 0.9em; }
+    .day1-bosses table, .day2-bosses table { font-size: 0.85em; }
+}
