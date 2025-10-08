@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let selectedDay1 = null;
     let selectedDay2 = null;
 
-    // ボス候補表示関数
+    // 結果表示
     function displayResults(title, list) {
         result.innerHTML = `<h4>${title}</h4>`;
         list.forEach(name => {
@@ -61,10 +61,15 @@ document.addEventListener("DOMContentLoaded", function() {
     Object.keys(bosses["1日目"]).forEach(boss => {
         const btn = document.createElement("button");
         btn.textContent = boss;
+        btn.classList.add("search-btn");
         btn.addEventListener("click", () => {
             selectedDay1 = boss;
             selectedDay2 = null;
             document.querySelectorAll("#day1-buttons button").forEach(b => b.classList.remove("selected"));
+            document.querySelectorAll("#day2-buttons button").forEach(b => {
+                b.classList.remove("selected", "highlight");
+                b.disabled = true;
+            });
             btn.classList.add("selected");
             displayResults("候補", bosses["1日目"][boss]);
             enableDay2Buttons(boss);
@@ -76,13 +81,13 @@ document.addEventListener("DOMContentLoaded", function() {
     Object.keys(bosses["2日目"]).forEach(boss => {
         const btn = document.createElement("button");
         btn.textContent = boss;
+        btn.classList.add("search-btn");
         btn.disabled = true;
         btn.addEventListener("click", () => {
             if (!selectedDay1) return;
             selectedDay2 = boss;
             document.querySelectorAll("#day2-buttons button").forEach(b => b.classList.remove("selected"));
             btn.classList.add("selected");
-
             const c1 = bosses["1日目"][selectedDay1];
             const c2 = bosses["2日目"][selectedDay2];
             const overlap = c1.filter(n => c2.includes(n));
@@ -92,24 +97,33 @@ document.addEventListener("DOMContentLoaded", function() {
         day2Container.appendChild(btn);
     });
 
-    // 1日目選択後、対応する2日目ボタンを有効化
+    // 1日目選択後、対応する2日目ボタン有効化＋色付け
     function enableDay2Buttons(day1Boss) {
         const c1 = bosses["1日目"][day1Boss];
         document.querySelectorAll("#day2-buttons button").forEach(btn => {
             const c2 = bosses["2日目"][btn.textContent];
-            btn.disabled = !c2.some(n => c1.includes(n));
+            const overlap = c2.filter(n => c1.includes(n) && n !== "ナメレス");
+            if (overlap.length > 0) {
+                btn.disabled = false;
+                btn.classList.add("highlight", classMap[overlap[0]]);
+            } else {
+                btn.disabled = true;
+                btn.classList.remove("highlight", ...Object.values(classMap));
+            }
         });
     }
 
     // リセットボタン
     const resetBtn = document.createElement("button");
-    resetBtn.id = "reset-btn"; // id を追加
+    resetBtn.id = "reset-btn";
     resetBtn.textContent = "リセット";
     resetBtn.addEventListener("click", () => {
         selectedDay1 = null;
         selectedDay2 = null;
-        document.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
-        document.querySelectorAll("#day2-buttons button").forEach(b => b.disabled = true);
+        document.querySelectorAll("button").forEach(b => {
+            b.classList.remove("selected", "highlight", ...Object.values(classMap));
+            if (b.parentElement.id === "day2-buttons") b.disabled = true;
+        });
         result.innerHTML = "夜の王候補がここに表示されます";
     });
     result.insertAdjacentElement("beforebegin", resetBtn);
