@@ -1,0 +1,117 @@
+document.addEventListener("DOMContentLoaded", function() {
+
+    const classMap = {
+        "グラディウス": "tricephalos",
+        "エデレ": "gaping-jaw",
+        "マリス": "augur",
+        "リブラ": "equilibrious-beast",
+        "フルゴール": "darkdrift-knight",
+        "カリゴ": "fissure-in-the-fog",
+        "グノスター": "sentient-pest",
+        "ナメレス": "night-aspect"
+    };
+
+    const bosses = {
+        "1日目": {
+            "亜人の女王＆亜人の剣聖": ["グラディウス","ナメレス"],
+            "英雄のガーゴイル": ["エデレ","マリス","ナメレス"],
+            "王族の幽鬼": ["リブラ","フルゴール","ナメレス"],
+            "公のフレイディア": ["エデレ","リブラ","カリゴ","ナメレス"],
+            "鈴玉狩り": ["グラディウス","ナメレス"],
+            "戦場の宿将": ["グノスター","リブラ","フルゴール","ナメレス"],
+            "燻れた樹霊": ["グノスター","カリゴ","ナメレス"],
+            "接ぎ木の君主": ["マリス","カリゴ","ナメレス"]
+        },
+        "2日目": {
+            "忌み鬼": ["グラディウス","ナメレス"],
+            "神肌の貴種＆神肌の使徒": ["マリス","カリゴ","ナメレス"],
+            "古竜": ["エデレ","ナメレス"],
+            "死儀礼の鳥": ["リブラ","ナメレス"],
+            "大土竜": ["グノスター","ナメレス"],
+            "冷たい谷の踊り子": ["カリゴ","ナメレス"],
+            "ツリーガード＆王都の騎兵": ["グラディウス","マリス","ナメレス"],
+            "ノクスの竜人兵": ["グノスター","フルゴール","ナメレス"],
+            "降る星の成獣": ["マリス","ナメレス"],
+            "砦地の宿将": ["エデレ","フルゴール","ナメレス"],
+            "無名の王": ["フルゴール","ナメレス"],
+            "竜のツリーガード＆王都の騎兵": ["グノスター","カリゴ","ナメレス"],
+            "坩堝の騎士＆黄金カバ": ["エデレ","リブラ","ナメレス"]
+        }
+    };
+
+    const day1Container = document.getElementById("day1-buttons");
+    const day2Container = document.getElementById("day2-buttons");
+    const result = document.getElementById("result");
+
+    let selectedDay1 = null;
+    let selectedDay2 = null;
+
+    // ボス候補表示関数
+    function displayResults(title, list) {
+        result.innerHTML = `<h4>${title}</h4>`;
+        list.forEach(name => {
+            const div = document.createElement("div");
+            div.textContent = name;
+            div.classList.add(classMap[name] || "night-aspect");
+            result.appendChild(div);
+        });
+    }
+
+    // 1日目ボタン生成
+    Object.keys(bosses["1日目"]).forEach(boss => {
+        const btn = document.createElement("button");
+        btn.textContent = boss;
+        btn.addEventListener("click", () => {
+            selectedDay1 = boss;
+            selectedDay2 = null;
+            document.querySelectorAll("#day1-buttons button").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            displayResults("候補", bosses["1日目"][boss]);
+            enableDay2Buttons(boss);
+        });
+        day1Container.appendChild(btn);
+    });
+
+    // 2日目ボタン生成
+    Object.keys(bosses["2日目"]).forEach(boss => {
+        const btn = document.createElement("button");
+        btn.textContent = boss;
+        btn.disabled = true;
+        btn.addEventListener("click", () => {
+            if (!selectedDay1) return;
+            selectedDay2 = boss;
+            document.querySelectorAll("#day2-buttons button").forEach(b => b.classList.remove("selected"));
+            btn.classList.add("selected");
+
+            const c1 = bosses["1日目"][selectedDay1];
+            const c2 = bosses["2日目"][selectedDay2];
+            const overlap = c1.filter(n => c2.includes(n));
+            const final = [...new Set([...overlap, "ナメレス"])];
+            displayResults("最終候補", final);
+        });
+        day2Container.appendChild(btn);
+    });
+
+    // 1日目選択後、対応する2日目ボタンを有効化
+    function enableDay2Buttons(day1Boss) {
+        const c1 = bosses["1日目"][day1Boss];
+        document.querySelectorAll("#day2-buttons button").forEach(btn => {
+            const c2 = bosses["2日目"][btn.textContent];
+            btn.disabled = !c2.some(n => c1.includes(n));
+        });
+    }
+
+    // リセットボタン
+    const resetBtn = document.createElement("button");
+    resetBtn.id = "reset-btn"; // id を追加
+    resetBtn.textContent = "リセット";
+    resetBtn.addEventListener("click", () => {
+        selectedDay1 = null;
+        selectedDay2 = null;
+        document.querySelectorAll("button").forEach(b => b.classList.remove("selected"));
+        document.querySelectorAll("#day2-buttons button").forEach(b => b.disabled = true);
+        result.innerHTML = "夜の王候補がここに表示されます";
+    });
+    result.insertAdjacentElement("beforebegin", resetBtn);
+
+});
