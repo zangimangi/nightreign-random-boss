@@ -134,4 +134,38 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     result.insertAdjacentElement("beforebegin", resetBtn);
 
+    // 早見表テーブル作成用
+    function createTableRows(day, tableId) {
+        const table = document.getElementById(tableId);
+        Object.entries(bosses[day]).forEach(([bossName, kings]) => {
+            // 「ナメレス」は除外
+            const filteredKings = kings.filter(k => k !== "ナメレス");
+            if (filteredKings.length === 0) return;
+
+            filteredKings.forEach((king, index) => {
+                const tr = document.createElement("tr");
+
+                // rowspanを1回目だけ設定
+                if (index === 0) {
+                    const tdBoss = document.createElement("td");
+                    if (filteredKings.length > 1) tdBoss.rowSpan = filteredKings.length;
+                    tdBoss.textContent = bossName;
+                    tr.appendChild(tdBoss);
+                }
+
+                const tdKing = document.createElement("td");
+                tdKing.textContent = king;
+                tdKing.className = classMap[king] || "";
+                tr.appendChild(tdKing);
+
+                table.appendChild(tr);
+            });
+        });
+    }
+
+    // 各日付テーブルを生成
+    createTableRows("1日目", "day1-table");
+    createTableRows("2日目", "day2-table");
+
 });
+
